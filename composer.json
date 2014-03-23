@@ -1,5 +1,5 @@
 {
-	"name": "Requests/test-server",
+	"name": "requests/test-server",
 	"description": "Test server to respond to Requests' tests!",
 	"homepage": "http://github.com/RequestsPHP/test-server",
 	"license": "ISC",
