@@ -1,0 +1,47 @@
+<?php
+
+ini_set('html_errors', false);
+header('Content-Type: application/json; charset=utf-8');
+
+$libdir = dirname( __DIR__ ) . '/lib';
+
+require_once $libdir . '/utils.php';
+
+$base_url = 'http://' . $_SERVER['HTTP_HOST'];
+
+$request_data = [
+	'url' => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+	'headers' => apache_request_headers(),
+	'origin' => $_SERVER['REMOTE_ADDR'],
+	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : parse_params_rfc( $_SERVER['QUERY_STRING'] ),
+];
+
+require_once $libdir . '/routes.php';
+
+$data = null;
+
+try {
+	foreach ($routes as $route => $callback) {
+		$route = preg_replace('#<(\w+)>#i', '(?P<\1>\w+)', $route);
+		$match = preg_match('#^' . $route . '$#i', $_SERVER['SCRIPT_NAME'], $matches);
+		if (empty($match))
+			continue;
+
+		$data = $callback;
+		break;
+	}
+
+	if (empty($data)) {
+		throw new Exception('Requested URL not found', 404);
+	}
+
+	while (is_callable($data)) {
+		$data = call_user_func($data, $matches);
+	}
+}
+catch (Exception $e) {
+	http_response_code($e->getCode());
+	$data = [ 'message' => $e->getMessage() ];
+}
+
+echo json_encode($data, JSON_PRETTY_PRINT);

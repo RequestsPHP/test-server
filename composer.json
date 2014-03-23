@@ -1,0 +1,17 @@
+{
+	"name": "Requests/test-server",
+	"description": "Test server to respond to Requests' tests!",
+	"homepage": "http://github.com/RequestsPHP/test-server",
+	"license": "ISC",
+	"keywords": ["http", "test"],
+	"authors": [
+		{
+			"name": "Ryan McCue",
+			"homepage": "http://ryanmccue.info"
+		}
+	],
+	"require": {
+		"php": ">=5.2"
+	},
+	"type": "library"
+}
