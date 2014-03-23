@@ -1,5 +1,7 @@
 <?php
 
+namespace Requests\TestServer;
+
 class Response {
 	public static function redirect ($path, $code = 302, $relative = false) {
 		global $base_url;

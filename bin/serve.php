@@ -1,11 +1,12 @@
 <?php
 
+if ( ! function_exists( 'Requests\\TestServer\\get_routes' ) ) {
+	require dirname( __DIR__ ) . '/lib/utils.php';
+	require dirname( __DIR__ ) . '/lib/routes.php';
+}
+
 ini_set('html_errors', false);
 header('Content-Type: application/json; charset=utf-8');
-
-$libdir = dirname( __DIR__ ) . '/lib';
-
-require_once $libdir . '/utils.php';
 
 $base_url = 'http://' . $_SERVER['HTTP_HOST'];
 
@@ -16,7 +17,7 @@ $request_data = [
 	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : parse_params_rfc( $_SERVER['QUERY_STRING'] ),
 ];
 
-require_once $libdir . '/routes.php';
+$routes = Requests\TestServer\get_routes();
 
 $data = null;
 
