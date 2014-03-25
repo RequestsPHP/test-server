@@ -1,6 +1,8 @@
-SERVERDIR=$(dirname $0)
+SERVERDIR="$PWD/$(dirname $0)"
 
-php -S 0.0.0.0:80 $SERVERDIR/serve.php > $SERVERDIR/http.log 2>&1 &
-HTTP_PID=$!
+PHPBIN=$(which php)
+SERVERADDRESS="-S 0.0.0.0:80"
+ARGS="$SERVERADDRESS $SERVERDIR/serve.php"
+PIDFILE="$SERVERDIR/http.pid"
 
-echo $HTTP_PID > $SERVERDIR/http.pid
+start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --exec $PHPBIN -- $ARGS

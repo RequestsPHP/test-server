@@ -1,4 +1,5 @@
-SERVERDIR=$(dirname $0)
+SERVERDIR="$PWD/$(dirname $0)"
 
-cat $SERVERDIR/http.pid | xargs kill
-rm $SERVERDIR/http.pid
+PIDFILE="$SERVERDIR/http.pid"
+
+start-stop-daemon --stop --pidfile $PIDFILE --make-pidfile && rm $SERVERDIR/http.pid
