@@ -14,7 +14,7 @@ $request_data = [
 	'url' => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 	'headers' => apache_request_headers(),
 	'origin' => $_SERVER['REMOTE_ADDR'],
-	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : parse_params_rfc( $_SERVER['QUERY_STRING'] ),
+	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : Requests\TestServer\parse_params_rfc( $_SERVER['QUERY_STRING'] ),
 ];
 
 $routes = Requests\TestServer\get_routes();
