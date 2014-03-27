@@ -1,6 +1,6 @@
 SERVERDIR="$PWD/$(dirname $0)"
 
-PHPBIN="$(which php)"
+PHPBIN=${PHPBIN:-"$(which php)"}
 SERVERADDRESS="-S 0.0.0.0:80"
 ARGS="$SERVERADDRESS $SERVERDIR/serve.php"
 PIDFILE="$SERVERDIR/http.pid"
