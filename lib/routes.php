@@ -186,6 +186,19 @@ function get_routes() {
 		echo $response;
 		exit;
 	};
+	$routes['/bytes/<bytes>'] = function ($args) {
+		header('Content-Type: application/octet-stream');
+
+		mt_srand('RequestsPHP');
+		$sent = 0;
+		$desired = min((int) $args['bytes'], 10000);
+		while ($sent < $desired) {
+			$next = mt_rand(0, 255);
+			echo chr($next);
+			$sent++;
+		}
+		exit;
+	};
 
 	// Finally, the index!
 	$routes['/'] = function () use ($routes) {
