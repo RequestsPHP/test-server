@@ -1,5 +1,5 @@
 SERVERDIR="$PWD/$(dirname $0)"
-PORT="80"
+PORT=${PORT:-"80"}
 
 PHPBIN=${PHPBIN:-"$(which php)"}
 SERVERADDRESS="-S 0.0.0.0:$PORT"
