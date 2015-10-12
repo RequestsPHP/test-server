@@ -45,6 +45,12 @@ else {
 	}
 }
 
+// Are we reverse proxied?
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	// Ensure caching is off
+	header('Cache-Control: no-cache');
+}
+
 $request_data = [
 	'url' => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 	'headers' => $headers,
