@@ -20,7 +20,7 @@ elseif (function_exists('getallheaders')) {
 else {
 	$headers = array();
 	foreach ($_SERVER as $name => $value) {
-		if (strpos($value, 'HTTP_') !== 0) {
+		if (strpos($name, 'HTTP_') !== 0) {
 			continue;
 		}
 
