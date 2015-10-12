@@ -20,6 +20,14 @@ elseif (function_exists('getallheaders')) {
 else {
 	$headers = array();
 	foreach ($_SERVER as $name => $value) {
+		if ($name === 'CONTENT_TYPE') {
+			$headers['content-type'] = $value;
+			continue;
+		}
+		if ($name === 'CONTENT_LENGTH') {
+			$headers['content-length'] = $value;
+			continue;
+		}
 		if (strpos($name, 'HTTP_') !== 0) {
 			continue;
 		}
