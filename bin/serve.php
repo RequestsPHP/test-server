@@ -49,11 +49,15 @@ $request_data = [
 $routes = Requests\TestServer\get_routes();
 
 $data = null;
+$here = $_SERVER['REQUEST_URI'];
+if (strpos($here, '?') !== false) {
+	$here = substr($here, 0, strpos($here, '?'));
+}
 
 try {
 	foreach ($routes as $route => $callback) {
 		$route = preg_replace('#<(\w+)>#i', '(?P<\1>\w+)', $route);
-		$match = preg_match('#^' . $route . '$#i', $_SERVER['SCRIPT_NAME'], $matches);
+		$match = preg_match('#^' . $route . '$#i', $here, $matches);
 		if (empty($match))
 			continue;
 
