@@ -10,9 +10,29 @@ header('Content-Type: application/json; charset=utf-8');
 
 $base_url = 'http://' . $_SERVER['HTTP_HOST'];
 
+$headers = null;
+if (function_exists('apache_request_headers')) {
+	$headers = apache_request_headers();
+}
+elseif (function_exists('getallheaders')) {
+	$headers = getallheaders();
+}
+else {
+	$headers = array();
+	foreach ($_SERVER as $name => $value) {
+		if (strpos($value, 'HTTP_') !== 0) {
+			continue;
+		}
+
+		// Strip HTTP_ prefix and lowercase
+		$key = strtolower(substr($name, 5));
+		$headers[$key] = $value;
+	}
+}
+
 $request_data = [
 	'url' => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-	'headers' => apache_request_headers(),
+	'headers' => $headers,
 	'origin' => $_SERVER['REMOTE_ADDR'],
 	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : Requests\TestServer\parse_params_rfc( $_SERVER['QUERY_STRING'] ),
 ];
