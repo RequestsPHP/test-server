@@ -38,7 +38,9 @@ else {
 
 		// Strip HTTP_ prefix and lowercase
 		$key = strtolower(substr($name, 5));
-		$key = str_replace('_', '-', $key);
+		$key = str_replace('_', ' ', $key);
+		$key = ucwords($key);
+		$key = str_replace(' ', '-', $key);
 		$headers[$key] = $value;
 	}
 }
