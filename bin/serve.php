@@ -21,11 +21,15 @@ else {
 	$headers = array();
 	foreach ($_SERVER as $name => $value) {
 		if ($name === 'CONTENT_TYPE') {
-			$headers['content-type'] = $value;
+			if ($value !== '') {
+				$headers['content-type'] = $value;
+			}
 			continue;
 		}
 		if ($name === 'CONTENT_LENGTH') {
-			$headers['content-length'] = $value;
+			if ($value !== '') {
+				$headers['content-length'] = $value;
+			}
 			continue;
 		}
 		if (strpos($name, 'HTTP_') !== 0) {
