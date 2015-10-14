@@ -61,7 +61,8 @@ function get_routes() {
 		exit;
 	};
 	$routes['/cookies/set/<key>/<value>'] = function ($args) {
-		setcookie($args['key'], $args['value'], 0, '/');
+		$expiry = isset($_GET['expiry']) ? (int) $_GET['expiry'] : 0;
+		setcookie($args['key'], $args['value'], $expiry, '/');
 
 		Response::redirect('/cookies');
 		exit;
