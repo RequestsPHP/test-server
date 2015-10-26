@@ -2,6 +2,8 @@
 
 namespace Requests\TestServer;
 
+use Exception;
+
 function get_routes() {
 	global $request_data, $base_url;
 	$routes = [];
