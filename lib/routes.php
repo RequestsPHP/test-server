@@ -47,6 +47,20 @@ function get_routes() {
 
 		return Response::generate_post_data();
 	};
+	$routes['/options'] = function () {
+		if ($_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
+			throw new Exception('Method not allowed', 405);
+		}
+
+		return Response::generate_post_data();
+	};
+	$routes['/trace'] = function () use ($request_data) {
+		if ($_SERVER['REQUEST_METHOD'] !== 'TRACE') {
+			throw new Exception('Method not allowed', 405);
+		}
+
+		return $request_data;
+	};
 
 	// Cookies!
 	$routes['/cookies'] = function () {
