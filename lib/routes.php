@@ -61,12 +61,12 @@ function get_routes() {
 
 		return $request_data;
 	};
-	$routes['/purge'] = function () use ($request_data) {
+	$routes['/purge'] = function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'PURGE') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return $request_data;
+		return Response::generate_post_data();
 	};
 
 	// Cookies!
