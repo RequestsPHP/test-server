@@ -68,6 +68,13 @@ function get_routes() {
 
 		return Response::generate_post_data();
 	};
+	$routes['/lock'] = function () {
+		if ($_SERVER['REQUEST_METHOD'] !== 'LOCK') {
+			throw new Exception('Method not allowed', 405);
+		}
+
+		return Response::generate_post_data();
+	};
 
 	// Cookies!
 	$routes['/cookies'] = function () {
