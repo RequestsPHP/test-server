@@ -6,7 +6,7 @@ use Exception;
 
 function get_routes() {
 	global $request_data, $base_url;
-	$routes = [];
+	$routes = array();
 
 	// Request data!
 	$routes['/get'] = function () use ($request_data) {
