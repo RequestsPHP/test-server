@@ -220,7 +220,7 @@ function get_routes() {
 	$routes['/bytes/<bytes>'] = function ($args) {
 		header('Content-Type: application/octet-stream');
 
-		mt_srand('RequestsPHP');
+		mt_srand(0);
 		$sent = 0;
 		$desired = min((int) $args['bytes'], 10000);
 		while ($sent < $desired) {
