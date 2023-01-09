@@ -14,7 +14,9 @@ RUN composer install \
 
 FROM php:8-cli as app
 
-EXPOSE 8080
-
 COPY . /var/www/html
 COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
+
+ENV PORT=8080
+EXPOSE 8080
+CMD [ "/var/www/html/bin/start.sh" ]
