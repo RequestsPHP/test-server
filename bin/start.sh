@@ -13,4 +13,4 @@ SERVERADDRESS="-S 0.0.0.0:$PORT"
 ARGS="$SERVERADDRESS $SERVERDIR/serve.php"
 PIDFILE="$SERVERDIR/http.pid"
 
-$PHPBIN -- $ARGS
+start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --exec $PHPBIN -- $ARGS
