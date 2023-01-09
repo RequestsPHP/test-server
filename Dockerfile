@@ -17,4 +17,4 @@ FROM php:8-cli as app
 COPY . /var/www/html
 COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
 
-ENTRYPOINT [ "/var/www/html/bin/start.sh" ]
+CMD [ "/var/www/html/bin/start.sh" ]
