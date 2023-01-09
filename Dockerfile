@@ -14,5 +14,7 @@ RUN composer install \
 
 FROM php:8-cli as app
 
+EXPOSE 8080
+
 COPY . /var/www/html
 COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
