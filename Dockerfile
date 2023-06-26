@@ -2,6 +2,9 @@ FROM php:8.0-apache
 
 COPY . .
 
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
