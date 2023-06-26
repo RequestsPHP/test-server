@@ -10,6 +10,10 @@ RUN composer install --no-dev
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     a2enmod headers && \
-    a2enmod rewrite
+    a2enmod rewrite && \
+    a2enmod session && \
+    a2enmod session_cookie && \
+    a2enmod session_crypto && \
+    a2enmod ssl
 
 EXPOSE 80
