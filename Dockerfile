@@ -17,6 +17,6 @@ FROM php:8-cli as app
 COPY . /var/www/html
 COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
 
-ENV PORT=10000
-EXPOSE 10000
+ENV PORT=80
+EXPOSE 80
 CMD [ "/var/www/html/bin/start.sh" ]
