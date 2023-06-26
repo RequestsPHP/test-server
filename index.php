@@ -1,8 +1,8 @@
 <?php
 
 if ( ! function_exists( 'Requests\\TestServer\\get_routes' ) ) {
-	require dirname( __DIR__ ) . '/lib/utils.php';
-	require dirname( __DIR__ ) . '/lib/routes.php';
+	require __DIR__ . '/lib/utils.php';
+	require __DIR__ . '/lib/routes.php';
 }
 
 ini_set('html_errors', false);
