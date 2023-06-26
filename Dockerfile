@@ -1,22 +1,20 @@
-FROM composer:2.5 as vendor
+FROM richarvey/nginx-php-fpm:1.9.1
 
-WORKDIR /tmp/
+COPY . .
 
-COPY composer.json composer.json
-COPY composer.lock composer.lock
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
-RUN composer install \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
 
-FROM php:8-cli as app
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-COPY . /var/www/html
-COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
-
-ENV PORT=80
-EXPOSE 80
-CMD [ "/var/www/html/bin/start.sh" ]
+CMD ["/start.sh"]
