@@ -13,9 +13,11 @@ RUN composer install --no-dev
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     a2enmod headers && \
-    a2enmod rewrite
-
-RUN cp /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/ && \
-    cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/
+    a2enmod rewrite && \
+    a2enmod session && \
+    a2enmod session_cookie && \
+    a2enmod session_crypto && \
+    a2enmod ssl
 
 EXPOSE 80
+EXPOSE 443
