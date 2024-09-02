@@ -8,7 +8,17 @@ if ( ! function_exists( 'Requests\\TestServer\\get_routes' ) ) {
 ini_set('html_errors', false);
 header('Content-Type: application/json; charset=utf-8');
 
-$scheme   = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+$is_secure = false;
+if (isset($_SERVER['HTTPS']) && ! empty($_SERVER['HTTPS']) ) {
+	$is_secure = true;
+}
+elseif ((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+	|| (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
+) {
+	$is_secure = true;
+}
+
+$scheme   = $is_secure ? 'https' : 'http';
 $base_url = $scheme . $_SERVER['HTTP_HOST'];
 
 $headers = null;
