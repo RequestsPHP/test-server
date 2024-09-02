@@ -18,7 +18,7 @@ elseif ((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDE
 	$is_secure = true;
 }
 
-$scheme   = $is_secure ? 'https' : 'http';
+$scheme   = $is_secure ? 'https://' : 'http://';
 $base_url = $scheme . $_SERVER['HTTP_HOST'];
 
 $headers = null;
