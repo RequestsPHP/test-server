@@ -8,7 +8,8 @@ if ( ! function_exists( 'Requests\\TestServer\\get_routes' ) ) {
 ini_set('html_errors', false);
 header('Content-Type: application/json; charset=utf-8');
 
-$base_url = 'http://' . $_SERVER['HTTP_HOST'];
+$scheme   = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+$base_url = $scheme . $_SERVER['HTTP_HOST'];
 
 $headers = null;
 if (function_exists('apache_request_headers')) {
@@ -52,7 +53,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 }
 
 $request_data = [
-	'url' => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+	'url' => $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 	'headers' => $headers,
 	'origin' => $_SERVER['REMOTE_ADDR'],
 	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : Requests\TestServer\parse_params_rfc( $_SERVER['QUERY_STRING'] ),
