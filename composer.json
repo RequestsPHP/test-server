@@ -1,18 +1,25 @@
 {
 	"name": "requests/test-server",
 	"description": "Test server to respond to Requests' tests!",
-	"homepage": "http://github.com/RequestsPHP/test-server",
 	"license": "ISC",
-	"keywords": ["http", "test"],
+	"type": "library",
+	"keywords": [
+		"http",
+		"test"
+	],
 	"authors": [
 		{
 			"name": "Ryan McCue",
 			"homepage": "http://ryanmccue.info"
 		}
 	],
+	"homepage": "http://github.com/RequestsPHP/test-server",
 	"require": {
 		"php": ">=5.6"
 	},
-	"type": "library",
-	"bin": [ "bin/start.sh", "bin/stop.sh", "bin/serve.php" ]
+	"bin": [
+		"bin/serve.php",
+		"bin/start.sh",
+		"bin/stop.sh"
+	]
 }
