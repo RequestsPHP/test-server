@@ -22,8 +22,9 @@ class Response
 		$data['data'] = file_get_contents('php://input');
 
 		$data['form'] = '';
-		if (strpos($data['data'], '&') !== false)
+		if (strpos($data['data'], '&') !== false) {
 			$data['form'] = parse_params_rfc($data['data']);
+		}
 
 		$data['json'] = json_decode($data['data']);
 
@@ -37,7 +38,9 @@ class Response
 
 function parse_params_rfc($input)
 {
-	if (!isset($input) || !$input) return [];
+	if (!isset($input) || !$input) {
+		return [];
+	}
 
 	$pairs = explode('&', $input);
 
