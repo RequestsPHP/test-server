@@ -27,7 +27,7 @@ if (function_exists('apache_request_headers')) {
 } elseif (function_exists('getallheaders')) {
 	$headers = getallheaders();
 } else {
-	$headers = array();
+	$headers = [];
 	foreach ($_SERVER as $name => $value) {
 		if ($name === 'CONTENT_TYPE') {
 			if ($value !== '') {

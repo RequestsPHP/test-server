@@ -37,11 +37,11 @@ class Response
 
 function parse_params_rfc($input)
 {
-	if (!isset($input) || !$input) return array();
+	if (!isset($input) || !$input) return [];
 
 	$pairs = explode('&', $input);
 
-	$parsed = array();
+	$parsed = [];
 	foreach ($pairs as $pair) {
 		$split = explode('=', $pair, 2);
 		$parameter = urldecode($split[0]);
