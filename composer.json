@@ -29,9 +29,24 @@
 	"require": {
 		"php": ">=5.6"
 	},
+	"require-dev": {
+		"php-parallel-lint/php-console-highlighter": "^1.0",
+		"php-parallel-lint/php-parallel-lint": "^1.4"
+	},
 	"bin": [
 		"bin/serve.php",
 		"bin/start.sh",
 		"bin/stop.sh"
-	]
+	],
+	"config": {
+		"lock": false
+	},
+	"scripts": {
+		"lint": [
+			"@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . --show-deprecated -e php --exclude vendor --exclude .git"
+		]
+	},
+	"scripts-descriptions": {
+		"lint": "Lint PHP files to find parse errors."
+	}
 }
