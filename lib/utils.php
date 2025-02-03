@@ -28,9 +28,12 @@ class Response
 
 		$data['json'] = json_decode($data['data']);
 
-		$data['files'] = array_map(function ($data) {
-			return file_get_contents($data['tmp_name']);
-		}, $_FILES);
+		$data['files'] = array_map(
+			static function ($data) {
+				return file_get_contents($data['tmp_name']);
+			},
+			$_FILES
+		);
 
 		return $data;
 	}
