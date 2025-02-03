@@ -11,6 +11,18 @@
 		{
 			"name": "Ryan McCue",
 			"homepage": "http://ryanmccue.info"
+		},
+		{
+			"name": "Alain Schlesser",
+			"homepage": "https://github.com/schlessera"
+		},
+		{
+			"name": "Juliette Reinders Folmer",
+			"homepage": "https://github.com/jrfnl"
+		},
+		{
+			"name": "Contributors",
+			"homepage": "https://github.com/RequestsPHP/test-server/graphs/contributors"
 		}
 	],
 	"homepage": "http://github.com/RequestsPHP/test-server",
