@@ -79,8 +79,9 @@ try {
 	foreach ($routes as $route => $callback) {
 		$route = preg_replace('#<(\w+)>#i', '(?P<\1>\w+)', $route);
 		$match = preg_match('#^' . $route . '$#i', $here, $matches);
-		if (empty($match))
+		if (empty($match)) {
 			continue;
+		}
 
 		$data = $callback;
 		break;
