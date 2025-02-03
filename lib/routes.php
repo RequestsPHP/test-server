@@ -238,7 +238,7 @@ function get_routes()
 
 		echo '<ul>';
 		foreach ($routes as $url => $_) {
-			echo '<li><code>' . htmlspecialchars($url) . '</code></li>';
+			echo '<li><code>' . htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '</code></li>';
 		}
 		echo '</ul>';
 		exit;
