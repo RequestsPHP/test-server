@@ -1,3 +1,7 @@
 # Ignore temporary files.
 /bin/http.log
 /bin/http.pid
+
+# Ignore composer related files
+/composer.lock
+/vendor
