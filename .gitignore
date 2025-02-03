@@ -1,0 +1,3 @@
+# Ignore temporary files.
+/bin/http.log
+/bin/http.pid
