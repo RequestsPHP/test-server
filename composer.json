@@ -14,8 +14,5 @@
 		"php": ">=5.6"
 	},
 	"type": "library",
-	"autoload": {
-		"files": [ "lib/routes.php", "lib/utils.php" ]
-	},
 	"bin": [ "bin/start.sh", "bin/stop.sh", "bin/serve.php" ]
 }
