@@ -2,8 +2,10 @@
 
 namespace Requests\TestServer;
 
-class Response {
-	public static function redirect ($path, $code = 302, $relative = false) {
+class Response
+{
+	public static function redirect($path, $code = 302, $relative = false)
+	{
 		global $base_url;
 		$url = $path;
 		if (!$relative) {
@@ -13,7 +15,8 @@ class Response {
 		header('Location: ' . $url, true, $code);
 	}
 
-	public static function generate_post_data() {
+	public static function generate_post_data()
+	{
 		global $request_data;
 		$data = $request_data;
 		$data['data'] = file_get_contents('php://input');
@@ -32,7 +35,8 @@ class Response {
 	}
 }
 
-function parse_params_rfc($input) {
+function parse_params_rfc($input)
+{
 	if (!isset($input) || !$input) return array();
 
 	$pairs = explode('&', $input);
