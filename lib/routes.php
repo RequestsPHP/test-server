@@ -4,7 +4,8 @@ namespace Requests\TestServer;
 
 use Exception;
 
-function get_routes() {
+function get_routes()
+{
 	global $request_data, $base_url;
 	$routes = [];
 
@@ -114,7 +115,7 @@ function get_routes() {
 
 		if ($args['user'] !== $supplied['user'] || $args['password'] !== $supplied['password']) {
 			http_response_code(401);
-			header( 'WWW-Authenticate: Basic realm="Fake Realm"' );
+			header('WWW-Authenticate: Basic realm="Fake Realm"');
 			return;
 		}
 
@@ -192,12 +193,12 @@ function get_routes() {
 		$generate_stream = function () use ($num, $response) {
 			foreach (range(0, $num - 1) as $n) {
 				$response['id'] = $n;
-				yield json_encode( $response, JSON_PRETTY_PRINT ) . "\n";
+				yield json_encode($response, JSON_PRETTY_PRINT) . "\n";
 			}
 		};
 
 		header('Transfer-Encoding: chunked');
-		foreach ( $generate_stream() as $response ) {
+		foreach ($generate_stream() as $response) {
 			printf("%x\r\n%s\r\n", strlen($response), $response);
 			flush();
 		}
@@ -237,7 +238,7 @@ function get_routes() {
 
 		echo '<ul>';
 		foreach ($routes as $url => $_) {
-			echo '<li><code>' . htmlspecialchars( $url ) . '</code></li>';
+			echo '<li><code>' . htmlspecialchars($url) . '</code></li>';
 		}
 		echo '</ul>';
 		exit;
