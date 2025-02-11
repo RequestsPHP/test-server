@@ -64,7 +64,9 @@ $request_data = [
 	'url' => $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 	'headers' => $headers,
 	'origin' => $_SERVER['REMOTE_ADDR'],
-	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : Requests\TestServer\parse_params_rfc($_SERVER['QUERY_STRING']),
+	'args' => empty($_SERVER['QUERY_STRING'])
+		? new stdClass()
+		: Requests\TestServer\parse_params_rfc($_SERVER['QUERY_STRING']),
 ];
 
 $routes = Requests\TestServer\get_routes();
