@@ -25,35 +25,35 @@ function get_routes()
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 	$routes['/put'] = function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 	$routes['/patch'] = function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 	$routes['/delete'] = function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 	$routes['/options'] = function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 	$routes['/trace'] = function () use ($request_data) {
 		if ($_SERVER['REQUEST_METHOD'] !== 'TRACE') {
@@ -67,14 +67,14 @@ function get_routes()
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 	$routes['/lock'] = function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'LOCK') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 
 	// Cookies!

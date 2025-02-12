@@ -15,7 +15,7 @@ class Response
 		header('Location: ' . $url, true, $code);
 	}
 
-	public static function generate_post_data()
+	public static function generatePostData()
 	{
 		global $request_data;
 		$data = $request_data;
