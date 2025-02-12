@@ -1,0 +1,11 @@
+# Ignore temporary files.
+/bin/http.log
+/bin/http.pid
+
+# Ignore composer related files
+/composer.lock
+/vendor
+
+# Ignore local overrides of the PHPCS config file.
+.phpcs.xml
+phpcs.xml

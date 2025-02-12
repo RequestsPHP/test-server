@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="Requests Test Server"
+	xsi:noNamespaceSchemaLocation="./vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+	<description>Requests Test Server rules for PHP_CodeSniffer</description>
+
+	<!--
+	#############################################################################
+	COMMAND LINE ARGUMENTS
+	https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml
+	#############################################################################
+	-->
+
+	<!-- Scan all files. -->
+	<file>.</file>
+
+	<!-- Third party files and build files don't need to comply with these coding standards. -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<!-- Only check PHP files. -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Show progress, show the error codes for each message (source). -->
+	<arg value="ps"/>
+
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="./"/>
+
+	<!-- Check up to 8 files simultaneously. -->
+	<arg name="parallel" value="8"/>
+
+	<!-- Default tab width for indentation fixes and such. -->
+	<arg name="tab-width" value="4"/>
+
+	<!--
+	#############################################################################
+	CHECK FOR PHP CROSS-VERSION COMPATIBILITY
+	#############################################################################
+	-->
+
+	<config name="testVersion" value="5.6-"/>
+	<rule ref="PHPCompatibility"/>
+
+
+	<!--
+	#############################################################################
+	CODING STYLE RULES
+	#############################################################################
+	-->
+
+	<!-- Use PSR-12 as a basis, but with tweaks. -->
+	<rule ref="PSR12">
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+	</rule>
+
+	<!-- ==========================================================================
+		 Enforce tab indentation.
+		 ========================================================================== -->
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+
+	<!-- ==========================================================================
+		 Disallow Yoda conditions.
+		 ========================================================================== -->
+	<rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
+
+	<!-- ==========================================================================
+		 Enforce short arrays.
+		 ========================================================================== -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+</ruleset>

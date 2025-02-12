@@ -4,12 +4,13 @@ namespace Requests\TestServer;
 
 use Exception;
 
-function get_routes() {
+function get_routes()
+{
 	global $request_data, $base_url;
 	$routes = [];
 
 	// Request data!
-	$routes['/get'] = function () use ($request_data) {
+	$routes['/get'] = static function () use ($request_data) {
 		if ($_SERVER['REQUEST_METHOD'] === 'HEAD') {
 			exit;
 		}
@@ -19,70 +20,70 @@ function get_routes() {
 		}
 		return $request_data;
 	};
-	$routes['/post'] = function () {
+	$routes['/post'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
-	$routes['/put'] = function () {
+	$routes['/put'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
-	$routes['/patch'] = function () {
+	$routes['/patch'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
-	$routes['/delete'] = function () {
+	$routes['/delete'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
-	$routes['/options'] = function () {
+	$routes['/options'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
-	$routes['/trace'] = function () use ($request_data) {
+	$routes['/trace'] = static function () use ($request_data) {
 		if ($_SERVER['REQUEST_METHOD'] !== 'TRACE') {
 			throw new Exception('Method not allowed', 405);
 		}
 
 		return $request_data;
 	};
-	$routes['/purge'] = function () {
+	$routes['/purge'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'PURGE') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
-	$routes['/lock'] = function () {
+	$routes['/lock'] = static function () {
 		if ($_SERVER['REQUEST_METHOD'] !== 'LOCK') {
 			throw new Exception('Method not allowed', 405);
 		}
 
-		return Response::generate_post_data();
+		return Response::generatePostData();
 	};
 
 	// Cookies!
-	$routes['/cookies'] = function () {
+	$routes['/cookies'] = static function () {
 		return [
 			'cookies' => $_COOKIE,
 		];
 	};
-	$routes['/cookies/set'] = function () {
+	$routes['/cookies/set'] = static function () {
 		foreach ($_GET as $key => $value) {
 			setcookie($key, $value, 0, '/');
 		}
@@ -90,14 +91,14 @@ function get_routes() {
 		Response::redirect('/cookies');
 		exit;
 	};
-	$routes['/cookies/set/<key>/<value>'] = function ($args) {
+	$routes['/cookies/set/<key>/<value>'] = static function ($args) {
 		$expiry = isset($_GET['expiry']) ? (int) $_GET['expiry'] : 0;
 		setcookie($args['key'], $args['value'], $expiry, '/');
 
 		Response::redirect('/cookies');
 		exit;
 	};
-	$routes['/cookies/delete'] = function () {
+	$routes['/cookies/delete'] = static function () {
 		foreach ($_GET as $key => $value) {
 			setcookie($key, '', time() - 3600, '/');
 		}
@@ -106,7 +107,7 @@ function get_routes() {
 		exit;
 	};
 
-	$routes['/basic-auth/<user>/<password>'] = function ($args) {
+	$routes['/basic-auth/<user>/<password>'] = static function ($args) {
 		$supplied = [
 			'user'     => empty($_SERVER['PHP_AUTH_USER']) ? false : $_SERVER['PHP_AUTH_USER'],
 			'password' => empty($_SERVER['PHP_AUTH_PW'])   ? false : $_SERVER['PHP_AUTH_PW'],
@@ -114,7 +115,7 @@ function get_routes() {
 
 		if ($args['user'] !== $supplied['user'] || $args['password'] !== $supplied['password']) {
 			http_response_code(401);
-			header( 'WWW-Authenticate: Basic realm="Fake Realm"' );
+			header('WWW-Authenticate: Basic realm="Fake Realm"');
 			return;
 		}
 
@@ -125,7 +126,7 @@ function get_routes() {
 	};
 
 	// Redirects!
-	$routes['/redirect/<number>'] = function ($args) use ($routes) {
+	$routes['/redirect/<number>'] = static function ($args) use ($routes) {
 		$num = (int) max((int) $args['number'], 1);
 		if ($num === 1) {
 			Response::redirect('/get');
@@ -137,12 +138,12 @@ function get_routes() {
 		Response::redirect(sprintf('/redirect/%d', $num));
 		exit;
 	};
-	$routes['/redirect-to'] = function () {
+	$routes['/redirect-to'] = static function () {
 		$location = $_GET['url'];
 		header('Location: ' . $location, true, 302);
 		exit;
 	};
-	$routes['/relative-redirect/<number>'] = function ($args) {
+	$routes['/relative-redirect/<number>'] = static function ($args) {
 		$num = (int) max((int) $args['number'], 1);
 		if ($num === 1) {
 			Response::redirect('/get', 302, true);
@@ -156,13 +157,13 @@ function get_routes() {
 	};
 
 	// Miscellaneous!
-	$routes['/delay/<delay>'] = function ($args) use ($routes) {
+	$routes['/delay/<delay>'] = static function ($args) use ($routes) {
 		$delay = min($args['delay'], 10);
 		sleep($delay);
 
 		return $routes['/get'];
 	};
-	$routes['/status/<code>'] = function ($args) use ($base_url) {
+	$routes['/status/<code>'] = static function ($args) use ($base_url) {
 		$code = (int) $args['code'];
 
 		switch ($code) {
@@ -186,25 +187,25 @@ function get_routes() {
 		http_response_code($code);
 		exit;
 	};
-	$routes['/stream/<num>'] = function ($args) use ($request_data) {
+	$routes['/stream/<num>'] = static function ($args) use ($request_data) {
 		$response = $request_data;
 		$num = min($args['num'], 100);
-		$generate_stream = function () use ($num, $response) {
+		$generate_stream = static function () use ($num, $response) {
 			foreach (range(0, $num - 1) as $n) {
 				$response['id'] = $n;
-				yield json_encode( $response, JSON_PRETTY_PRINT ) . "\n";
+				yield json_encode($response, JSON_PRETTY_PRINT) . "\n";
 			}
 		};
 
 		header('Transfer-Encoding: chunked');
-		foreach ( $generate_stream() as $response ) {
+		foreach ($generate_stream() as $response) {
 			printf("%x\r\n%s\r\n", strlen($response), $response);
 			flush();
 		}
 		echo "0\r\n\r\n";
 		exit;
 	};
-	$routes['/gzip'] = function () use ($request_data) {
+	$routes['/gzip'] = static function () use ($request_data) {
 		$response = $request_data;
 		$response['gzipped'] = true;
 
@@ -217,7 +218,7 @@ function get_routes() {
 		echo $response;
 		exit;
 	};
-	$routes['/bytes/<bytes>'] = function ($args) {
+	$routes['/bytes/<bytes>'] = static function ($args) {
 		header('Content-Type: application/octet-stream');
 
 		mt_srand(0);
@@ -232,12 +233,12 @@ function get_routes() {
 	};
 
 	// Finally, the index!
-	$routes['/'] = function () use ($routes) {
+	$routes['/'] = static function () use ($routes) {
 		header('Content-Type: text/html; charset=utf-8');
 
 		echo '<ul>';
 		foreach ($routes as $url => $_) {
-			echo '<li><code>' . htmlspecialchars( $url ) . '</code></li>';
+			echo '<li><code>' . htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '</code></li>';
 		}
 		echo '</ul>';
 		exit;

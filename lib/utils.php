@@ -2,8 +2,10 @@
 
 namespace Requests\TestServer;
 
-class Response {
-	public static function redirect ($path, $code = 302, $relative = false) {
+class Response
+{
+	public static function redirect($path, $code = 302, $relative = false)
+	{
 		global $base_url;
 		$url = $path;
 		if (!$relative) {
@@ -13,31 +15,39 @@ class Response {
 		header('Location: ' . $url, true, $code);
 	}
 
-	public static function generate_post_data() {
+	public static function generatePostData()
+	{
 		global $request_data;
 		$data = $request_data;
 		$data['data'] = file_get_contents('php://input');
 
 		$data['form'] = '';
-		if (strpos($data['data'], '&') !== false)
+		if (strpos($data['data'], '&') !== false) {
 			$data['form'] = parse_params_rfc($data['data']);
+		}
 
 		$data['json'] = json_decode($data['data']);
 
-		$data['files'] = array_map(function ($data) {
-			return file_get_contents($data['tmp_name']);
-		}, $_FILES);
+		$data['files'] = array_map(
+			static function ($data) {
+				return file_get_contents($data['tmp_name']);
+			},
+			$_FILES
+		);
 
 		return $data;
 	}
 }
 
-function parse_params_rfc($input) {
-	if (!isset($input) || !$input) return array();
+function parse_params_rfc($input)
+{
+	if (!isset($input) || !$input) {
+		return [];
+	}
 
 	$pairs = explode('&', $input);
 
-	$parsed = array();
+	$parsed = [];
 	foreach ($pairs as $pair) {
 		$split = explode('=', $pair, 2);
 		$parameter = urldecode($split[0]);
