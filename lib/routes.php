@@ -76,6 +76,13 @@ function get_routes()
 
 		return Response::generatePostData();
 	};
+	$routes['/query'] = function () {
+		if ($_SERVER['REQUEST_METHOD'] !== 'QUERY') {
+			throw new Exception('Method not allowed', 405);
+		}
+
+		return Response::generate_post_data();
+	};
 
 	// Cookies!
 	$routes['/cookies'] = static function () {
