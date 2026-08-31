@@ -1,19 +1,19 @@
 <?php
 
-if ( ! function_exists( 'Requests\\TestServer\\get_routes' ) ) {
-	require dirname( __DIR__ ) . '/lib/utils.php';
-	require dirname( __DIR__ ) . '/lib/routes.php';
+if (! function_exists('Requests\\TestServer\\get_routes')) {
+	require dirname(__DIR__) . '/lib/utils.php';
+	require dirname(__DIR__) . '/lib/routes.php';
 }
 
 ini_set('html_errors', false);
 header('Content-Type: application/json; charset=utf-8');
 
 $is_secure = false;
-if (isset($_SERVER['HTTPS']) && ! empty($_SERVER['HTTPS']) ) {
+if (isset($_SERVER['HTTPS']) && ! empty($_SERVER['HTTPS'])) {
 	$is_secure = true;
-}
-elseif ((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-	|| (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
+} elseif (
+	(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+	|| (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
 ) {
 	$is_secure = true;
 }
@@ -24,12 +24,10 @@ $base_url = $scheme . $_SERVER['HTTP_HOST'];
 $headers = null;
 if (function_exists('apache_request_headers')) {
 	$headers = apache_request_headers();
-}
-elseif (function_exists('getallheaders')) {
+} elseif (function_exists('getallheaders')) {
 	$headers = getallheaders();
-}
-else {
-	$headers = array();
+} else {
+	$headers = [];
 	foreach ($_SERVER as $name => $value) {
 		if ($name === 'CONTENT_TYPE') {
 			if ($value !== '') {
@@ -66,7 +64,9 @@ $request_data = [
 	'url' => $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 	'headers' => $headers,
 	'origin' => $_SERVER['REMOTE_ADDR'],
-	'args' => empty($_SERVER['QUERY_STRING']) ? new stdClass : Requests\TestServer\parse_params_rfc( $_SERVER['QUERY_STRING'] ),
+	'args' => empty($_SERVER['QUERY_STRING'])
+		? new stdClass()
+		: Requests\TestServer\parse_params_rfc($_SERVER['QUERY_STRING']),
 ];
 
 $routes = Requests\TestServer\get_routes();
@@ -81,8 +81,9 @@ try {
 	foreach ($routes as $route => $callback) {
 		$route = preg_replace('#<(\w+)>#i', '(?P<\1>\w+)', $route);
 		$match = preg_match('#^' . $route . '$#i', $here, $matches);
-		if (empty($match))
+		if (empty($match)) {
 			continue;
+		}
 
 		$data = $callback;
 		break;
@@ -95,10 +96,9 @@ try {
 	while (is_callable($data)) {
 		$data = call_user_func($data, $matches);
 	}
-}
-catch (Exception $e) {
+} catch (Exception $e) {
 	http_response_code($e->getCode());
-	$data = [ 'message' => $e->getMessage() ];
+	$data = ['message' => $e->getMessage()];
 }
 
 echo json_encode($data, JSON_PRETTY_PRINT);
